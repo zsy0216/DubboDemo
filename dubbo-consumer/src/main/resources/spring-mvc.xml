@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- SpringMVC相关配置 -->
+    <context:component-scan base-package="com.joker.dubbo.handler"/>
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <mvc:annotation-driven/>
+    <mvc:default-servlet-handler/>
+
+    <!-- Dubbo配置：当前应用名称 -->
+    <dubbo:application name="dubbo-consumer"/>
+
+    <!-- Dubbo配置：指定Dubbo注册中心类型和位置 -->
+    <dubbo:registry protocol="zookeeper" address="192.168.252.128" port="2181"></dubbo:registry>
+
+    <!-- Dubbo配置：引用Provider提供的可以远程调用的服务 -->
+    <dubbo:reference id="employeeRemoteService" interface="com.joker.dubbo.service.EmployeeRemoteService"/>
+
+</beans>

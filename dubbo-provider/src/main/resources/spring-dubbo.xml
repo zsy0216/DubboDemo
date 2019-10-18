@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- Dubbo配置：指定当前Web应用名称，便于在注册中心中注册 -->
+    <dubbo:application name="dubbo-provider"/>
+
+    <!-- Dubbo配置：指定注册中心的种类以及位置 -->
+    <dubbo:registry protocol="zookeeper" address="192.168.252.128" port="2181"/>
+
+    <!-- Dubbo配置：指定Dubbo的Provider本身监听的端口号 consumer访问时要使用这个端口号-->
+    <dubbo:protocol name="dubbo" port="20880"/>
+
+    <!-- 配置接口实现类的bean -->
+    <bean id="employeeRemoteServiceImpl" class="com.joker.dubbo.service.impl.EmployeeRemoteServiceImpl"/>
+
+    <!-- Dubbo配置：给远程方法接口指定实现类 -->
+    <dubbo:service interface="com.joker.dubbo.service.EmployeeRemoteService" ref="employeeRemoteServiceImpl"/>
+
+</beans>
